@@ -63,7 +63,7 @@ def game_loop():
 
     thing_startx = random.randrange(0, display_width)
     thing_starty = -600
-    thing_speed = 4
+    thing_speed = 7
     thing_width = 100
     thing_height = 100
 
