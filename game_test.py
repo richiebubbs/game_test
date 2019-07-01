@@ -14,13 +14,16 @@ red = (255,0,0)
 
 block_color = (53,115,255)
 
-car_width = 73
+selfie_width = 73
 
 gameDisplay = pygame.display.set_mode((display_width,display_height))
-pygame.display.set_caption('A bit Racey')
+pygame.display.set_caption('Selfie Smash!')
 clock = pygame.time.Clock()
 
-carImg = pygame.image.load('racecar.png')
+SelfieImg0 = pygame.image.load('selfie.jpg')
+SelfieImg1 = pygame.transform.rotate(SelfieImg0, 270)
+SelfieImg = pygame.transform.smoothscale(SelfieImg1, (73,90))
+
 
 
 def things_dodged(count):
@@ -31,15 +34,15 @@ def things_dodged(count):
 def things(thingx, thingy, thingw, thingh, color):
     pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
 
-def car(x,y):
-    gameDisplay.blit(carImg,(x,y))
+def selfie(x,y):
+    gameDisplay.blit(SelfieImg,(x,y))
 
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
 
 def message_display(text):
-    largeText = pygame.font.Font('freesansbold.ttf',115)
+    largeText = pygame.font.Font('freesansbold.ttf',96)
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf, TextRect)
@@ -49,11 +52,15 @@ def message_display(text):
     time.sleep(2)
 
     game_loop()
+
     
     
 
 def crash():
-    message_display('You Crashed')
+    
+    message_display('You got Smashed')
+    time.sleep(10)
+    
     
 def game_loop():
     x = (display_width * 0.45)
@@ -63,7 +70,7 @@ def game_loop():
 
     thing_startx = random.randrange(0, display_width)
     thing_starty = -600
-    thing_speed = 7
+    thing_speed = 9
     thing_width = 100
     thing_height = 100
 
@@ -99,10 +106,10 @@ def game_loop():
 
         
         thing_starty += thing_speed
-        car(x,y)
+        selfie(x,y)
         things_dodged(dodged)
 
-        if x > display_width - car_width or x < 0:
+        if x > display_width - selfie_width or x < 0:
             crash()
 
         if thing_starty > display_height:
@@ -115,7 +122,7 @@ def game_loop():
         if y < thing_starty+thing_height:
             print('y crossover')
 
-            if x > thing_startx and x < thing_startx + thing_width or x+car_width > thing_startx and x + car_width < thing_startx+thing_width:
+            if x > thing_startx and x < thing_startx + thing_width or x+selfie_width > thing_startx and x + selfie_width < thing_startx+thing_width:
                 print('x crossover')
                 crash()
         
